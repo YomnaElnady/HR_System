@@ -43,6 +43,8 @@ Employees.insertMany([
     }
 ])
 
+
+
 app.get('/HR-System', async(req,res) => {
     const result = await Employees.find();
     res.send(result);
@@ -67,19 +69,18 @@ app.post('/HR-System', async(req,res) => {
 app.delete('/HR-System/:name', async(req,res) => {
    try{
     const result = await Employees.find({name: req.params.name});
-    const deletedEmployee = await Employees.deleteMany({name: result.name})
-    console.log(deletedEmployee);
+    const deletedEmployee = await Employees.deleteMany({name: result[0].name})
     if(deletedEmployee.deletedCount===0){
-    res.status(404).send('This Employee is not exist');
+        res.status(404).send('This Employee is not exist');
     }
     else{
-    res.send(deletedEmployee);
+        res.send(`${deletedEmployee.deletedCount} employees have the same name have been deleted`);
     }
-}
+    }
 
-catch(error){
-    console.log(error,message)
-}
+    catch(error){
+        console.log(error,message)
+    }
 })
 
 app.listen(8000, () => console.log('listining for requests...'))
