@@ -69,18 +69,21 @@ app.post('/HR-System', async(req,res) => {
 app.delete('/HR-System/:name', async(req,res) => {
    try{
     const result = await Employees.find({name: req.params.name});
+    if(result.length>0){
     const deletedEmployee = await Employees.deleteMany({name: result[0].name})
-    if(deletedEmployee.deletedCount===0){
-        res.status(404).send('This Employee is not exist');
+    res.send(`${deletedEmployee.deletedCount} employees have the same name have been deleted`);
+    
     }
     else{
-        res.send(`${deletedEmployee.deletedCount} employees have the same name have been deleted`);
-    }
-    }
+        res.status(404).send('This Employee is not exist');
+
+    }    
+
+}
 
     catch(error){
-        console.log(error,message)
+        console.log(error.message)
     }
 })
 
-app.listen(8000, () => console.log('listining for requests...'))
+app.listen(3000, () => console.log('listining for requests...'))

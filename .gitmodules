@@ -1,0 +1,3 @@
+[submodule "hr_project_front"]
+	path = hr_project_front
+	url = https://github.com/AsmaaMghodia/hrProject.git
